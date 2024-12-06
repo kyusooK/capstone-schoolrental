@@ -1,13 +1,17 @@
 package schoolrental.domain;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
+import javax.persistence.Table;
+
 import lombok.Data;
 import schoolrental.ReserveApplication;
-import schoolrental.domain.FacilityRegistered;
-import schoolrental.domain.FacilityReserved;
 
 @Entity
 @Table(name = "Facility_table")
@@ -37,14 +41,12 @@ public class Facility {
 
     private Boolean isReserve;
 
-    @PostPersist
-    public void onPostPersist() {
-        FacilityRegistered facilityRegistered = new FacilityRegistered(this);
-        facilityRegistered.publishAfterCommit();
-    }
-
-    @PreUpdate
-    public void onPreUpdate() {
+    @PostUpdate
+    public void onPostUpdate() {
+        repository().findById(id).ifPresent(facility->{
+            facility.setIsReserve(true);
+            repository().save(facility);
+        });
         FacilityReserved facilityReserved = new FacilityReserved(this);
         facilityReserved.publishAfterCommit();
     }
@@ -58,29 +60,19 @@ public class Facility {
 
     //<<< Clean Arch / Port Method
     public static void registerFacility(SpaceMaintained spaceMaintained) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Facility facility = new Facility();
+        facility.setId(spaceMaintained.getId());
+        facility.setSpaceId(spaceMaintained.getId());
+        facility.setSchoolName(spaceMaintained.getSchoolName());
+        facility.setPlaceName(spaceMaintained.getPlaceName());
+        facility.setHeadCount(spaceMaintained.getHeadcount());
+        facility.setPrice(spaceMaintained.getPrice());
+        facility.setAddress(spaceMaintained.getAddress());
+        facility.setIsReserve(false);
         repository().save(facility);
 
         FacilityRegistered facilityRegistered = new FacilityRegistered(facility);
         facilityRegistered.publishAfterCommit();
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(spaceMaintained.get???()).ifPresent(facility->{
-            
-            facility // do something
-            repository().save(facility);
-
-            FacilityRegistered facilityRegistered = new FacilityRegistered(facility);
-            facilityRegistered.publishAfterCommit();
-
-         });
-        */
-
     }
     //>>> Clean Arch / Port Method
 

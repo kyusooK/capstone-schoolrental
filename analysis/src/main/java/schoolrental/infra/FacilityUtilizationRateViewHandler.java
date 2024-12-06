@@ -1,14 +1,16 @@
 package schoolrental.infra;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
+
 import schoolrental.config.kafka.KafkaProcessor;
-import schoolrental.domain.*;
+import schoolrental.domain.DataReceived;
+import schoolrental.domain.FacilityReserved;
+import schoolrental.domain.FacilityUtilizationRate;
 
 @Service
 public class FacilityUtilizationRateViewHandler {
@@ -50,7 +52,7 @@ public class FacilityUtilizationRateViewHandler {
             if (facilityUtilizationRateOptional.isPresent()) {
                 FacilityUtilizationRate facilityUtilizationRate = facilityUtilizationRateOptional.get();
                 // view 객체에 이벤트의 eventDirectValue 를 set 함
-                facilityUtilizationRate.setUseCount(useCount + 1);
+                facilityUtilizationRate.setUseCount(facilityUtilizationRate.getUseCount() + 1);
                 // view 레파지 토리에 save
                 facilityUtilizationRateRepository.save(facilityUtilizationRate);
             }

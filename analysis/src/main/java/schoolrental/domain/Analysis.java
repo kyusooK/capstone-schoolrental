@@ -1,12 +1,14 @@
 package schoolrental.domain;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+import java.util.Optional;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.Table;
+
 import lombok.Data;
 import schoolrental.AnalysisApplication;
-import schoolrental.domain.DataReceived;
 
 @Entity
 @Table(name = "Analysis_table")
@@ -36,28 +38,27 @@ public class Analysis {
     public static void receiveReservationData(
         FacilityReserved facilityReserved
     ) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Analysis analysis = new Analysis();
-        repository().save(analysis);
-
-        DataReceived dataReceived = new DataReceived(analysis);
-        dataReceived.publishAfterCommit();
-        */
-
-        /** Example 2:  finding and process
         
-        repository().findById(facilityReserved.get???()).ifPresent(analysis->{
-            
-            analysis // do something
+        Optional<Analysis> optionalAnalysis = repository().findById(facilityReserved.getSchoolName());
+
+        if (optionalAnalysis.isPresent()) {
+            Analysis analysis = optionalAnalysis.get();
+            analysis.setPlaceName(facilityReserved.getPlaceName());
+            analysis.setUseCount(analysis.getUseCount() + 1);
             repository().save(analysis);
 
-            DataReceived dataReceived = new DataReceived(analysis);
-            dataReceived.publishAfterCommit();
+            
 
-         });
-        */
+            
+        } else {
+            Analysis newAnalysis = new Analysis();
+            newAnalysis.setPlaceName(facilityReserved.getPlaceName());
+            newAnalysis.setUseCount(1); 
+            repository().save(newAnalysis);
+
+            DataReceived dataReceived = new DataReceived(newAnalysis);
+            dataReceived.publishAfterCommit();
+        }
 
     }
     //>>> Clean Arch / Port Method

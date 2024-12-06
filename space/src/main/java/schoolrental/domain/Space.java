@@ -1,15 +1,16 @@
 package schoolrental.domain;
 
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+
 import lombok.Data;
 import schoolrental.SpaceApplication;
-import schoolrental.domain.ManagerAssigned;
-import schoolrental.domain.ReserveStatusUpdated;
-import schoolrental.domain.SpaceMaintained;
-import schoolrental.domain.SpaceRegistered;
 
 @Entity
 @Table(name = "Space_table")
@@ -39,22 +40,21 @@ public class Space {
 
     @PostPersist
     public void onPostPersist() {
-        ReserveStatusUpdated reserveStatusUpdated = new ReserveStatusUpdated(
-            this
-        );
-        reserveStatusUpdated.publishAfterCommit();
 
         SpaceRegistered spaceRegistered = new SpaceRegistered(this);
         spaceRegistered.publishAfterCommit();
-
-        ManagerAssigned managerAssigned = new ManagerAssigned(this);
-        managerAssigned.publishAfterCommit();
     }
 
     @PreUpdate
     public void onPreUpdate() {
         SpaceMaintained spaceMaintained = new SpaceMaintained(this);
         spaceMaintained.publishAfterCommit();
+    }
+
+    @PostUpdate
+    public void onPostUpdate(){
+        ManagerAssigned managerAssigned = new ManagerAssigned(this);
+        managerAssigned.publishAfterCommit();
     }
 
     public static SpaceRepository repository() {
@@ -66,28 +66,16 @@ public class Space {
 
     //<<< Clean Arch / Port Method
     public static void updateReserveStatus(FacilityReserved facilityReserved) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Space space = new Space();
-        repository().save(space);
-
-        ReserveStatusUpdated reserveStatusUpdated = new ReserveStatusUpdated(space);
-        reserveStatusUpdated.publishAfterCommit();
-        */
-
-        /** Example 2:  finding and process
         
-        repository().findById(facilityReserved.get???()).ifPresent(space->{
+        repository().findById(facilityReserved.getSpaceId()).ifPresent(space->{
             
-            space // do something
+            space.setIsReserve(facilityReserved.getIsReserve());
             repository().save(space);
 
             ReserveStatusUpdated reserveStatusUpdated = new ReserveStatusUpdated(space);
             reserveStatusUpdated.publishAfterCommit();
 
          });
-        */
 
     }
     //>>> Clean Arch / Port Method

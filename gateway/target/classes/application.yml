@@ -16,7 +16,7 @@ spring:
         - id: reserve
           uri: http://localhost:8083
           predicates:
-            - Path=/facilities/**, /시설물검색/**
+            - Path=/facilities/**,
         - id: center
           uri: http://localhost:8084
           predicates:
