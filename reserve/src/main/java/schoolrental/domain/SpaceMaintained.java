@@ -7,16 +7,13 @@ import schoolrental.infra.AbstractEvent;
 
 @Data
 @ToString
-public class FacilityReserved extends AbstractEvent {
+public class SpaceMaintained extends AbstractEvent {
 
     private Long id;
-    private Long spaceId;
     private String schoolName;
     private String placeName;
-    private Integer headCount;
+    private Integer headcount;
     private Long price;
-    private String userId;
     private String address;
-    private Date reserveDate;
-    private Boolean isReserve;
+    private Boolean isMaintenance;
 }

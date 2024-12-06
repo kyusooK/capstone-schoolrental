@@ -9,16 +9,19 @@ import schoolrental.infra.AbstractEvent;
 //<<< DDD / Domain Event
 @Data
 @ToString
-public class DataReceived extends AbstractEvent {
+public class ReserveStatusUpdated extends AbstractEvent {
 
+    private Long id;
+    private Boolean isReserve;
+    private String schoolName;
     private String placeName;
-    private Integer useCount;
+    private String address;
 
-    public DataReceived(분석 aggregate) {
+    public ReserveStatusUpdated(Space aggregate) {
         super(aggregate);
     }
 
-    public DataReceived() {
+    public ReserveStatusUpdated() {
         super();
     }
 }

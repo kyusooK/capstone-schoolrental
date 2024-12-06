@@ -38,30 +38,7 @@ public class MyPageViewHandler {
     }
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void whenFacilityReserved_then_UPDATE_1(
-        @Payload FacilityReserved facilityReserved
-    ) {
-        try {
-            if (!facilityReserved.validate()) return;
-            // view 객체 조회
-            Optional<MyPage> myPageOptional = myPageRepository.findById(
-                facilityReserved.getSpaceId()
-            );
-
-            if (myPageOptional.isPresent()) {
-                MyPage myPage = myPageOptional.get();
-                // view 객체에 이벤트의 eventDirectValue 를 set 함
-                myPage.setIsReserve(facilityReserved.getIsReserve());
-                // view 레파지 토리에 save
-                myPageRepository.save(myPage);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whenManagerAssigned_then_UPDATE_2(
+    public void whenManagerAssigned_then_UPDATE_1(
         @Payload ManagerAssigned managerAssigned
     ) {
         try {
