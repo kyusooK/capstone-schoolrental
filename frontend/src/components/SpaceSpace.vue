@@ -42,21 +42,7 @@
                     text
                     @click="save"
                 >
-                    공간 정비
-                </v-btn>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="save"
-                >
                     등록
-                </v-btn>
-                <v-btn
-                    color="primary"
-                    text
-                    @click="save"
-                >
-                    매니저 배정
                 </v-btn>
                 <v-btn
                     color="primary"
@@ -78,6 +64,34 @@
         </v-card-actions>
         <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openMaintainSpace"
+            >
+                MaintainSpace
+            </v-btn>
+            <v-dialog v-model="maintainSpaceDiagram" width="500">
+                <MaintainSpaceCommand
+                    @closeDialog="closeMaintainSpace"
+                    @maintainSpace="maintainSpace"
+                ></MaintainSpaceCommand>
+            </v-dialog>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openAssignManager"
+            >
+                AssignManager
+            </v-btn>
+            <v-dialog v-model="assignManagerDiagram" width="500">
+                <AssignManagerCommand
+                    @closeDialog="closeAssignManager"
+                    @assignManager="assignManager"
+                ></AssignManagerCommand>
+            </v-dialog>
         </v-card-actions>
 
         <v-snackbar
@@ -115,6 +129,8 @@
                 timeout: 5000,
                 text: '',
             },
+            maintainSpaceDiagram: false,
+            assignManagerDiagram: false,
         }),
 	async created() {
         },
@@ -211,6 +227,58 @@
             },
             change(){
                 this.$emit('input', this.value);
+            },
+            async maintainSpace(params) {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['maintainspace'].href), params)
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                    this.closeMaintainSpace();
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            openMaintainSpace() {
+                this.maintainSpaceDiagram = true;
+            },
+            closeMaintainSpace() {
+                this.maintainSpaceDiagram = false;
+            },
+            async assignManager(params) {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['assignmanager'].href), params)
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                    this.closeAssignManager();
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            openAssignManager() {
+                this.assignManagerDiagram = true;
+            },
+            closeAssignManager() {
+                this.assignManagerDiagram = false;
             },
         },
     }

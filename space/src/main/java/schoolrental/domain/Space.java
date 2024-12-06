@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import schoolrental.SpaceApplication;
+import schoolrental.domain.ReserveStatusUpdated;
+import schoolrental.domain.SpaceRegistered;
 
 @Entity
 @Table(name = "Space_table")
@@ -46,10 +48,7 @@ public class Space {
     }
 
     @PreUpdate
-    public void onPreUpdate() {
-        SpaceMaintained spaceMaintained = new SpaceMaintained(this);
-        spaceMaintained.publishAfterCommit();
-    }
+    public void onPreUpdate() {}
 
     @PostUpdate
     public void onPostUpdate(){
@@ -63,6 +62,25 @@ public class Space {
         );
         return spaceRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void maintainSpace(MaintainSpaceCommand maintainSpaceCommand) {
+        //implement business logic here:
+
+        SpaceMaintained spaceMaintained = new SpaceMaintained(this);
+        spaceMaintained.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public void assignManager(AssignManagerCommand assignManagerCommand) {
+        //implement business logic here:
+
+        ManagerAssigned managerAssigned = new ManagerAssigned(this);
+        managerAssigned.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
 
     //<<< Clean Arch / Port Method
     public static void updateReserveStatus(FacilityReserved facilityReserved) {

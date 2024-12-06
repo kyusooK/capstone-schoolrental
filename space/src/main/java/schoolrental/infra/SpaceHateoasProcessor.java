@@ -12,6 +12,17 @@ public class SpaceHateoasProcessor
 
     @Override
     public EntityModel<Space> process(EntityModel<Space> model) {
+        model.add(
+            Link
+                .of(model.getRequiredLink("self").getHref() + "/maintainspace")
+                .withRel("maintainspace")
+        );
+        model.add(
+            Link
+                .of(model.getRequiredLink("self").getHref() + "/assignmanager")
+                .withRel("assignmanager")
+        );
+
         return model;
     }
 }

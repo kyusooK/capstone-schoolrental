@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import lombok.Data;
 import schoolrental.ReserveApplication;
+import schoolrental.domain.FacilityRegistered;
 
 @Entity
 @Table(name = "Facility_table")
@@ -41,14 +42,10 @@ public class Facility {
 
     private Boolean isReserve;
 
-    @PostUpdate
-    public void onPostUpdate() {
-        repository().findById(id).ifPresent(facility->{
-            facility.setIsReserve(true);
-            repository().save(facility);
-        });
-        FacilityReserved facilityReserved = new FacilityReserved(this);
-        facilityReserved.publishAfterCommit();
+    @PostPersist
+    public void onPostPersist() {
+        FacilityRegistered facilityRegistered = new FacilityRegistered(this);
+        facilityRegistered.publishAfterCommit();
     }
 
     public static FacilityRepository repository() {
@@ -57,6 +54,16 @@ public class Facility {
         );
         return facilityRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void reservation(ReservationCommand reservationCommand) {
+        //implement business logic here:
+
+        FacilityReserved facilityReserved = new FacilityReserved(this);
+        facilityReserved.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
 
     //<<< Clean Arch / Port Method
     public static void registerFacility(SpaceMaintained spaceMaintained) {

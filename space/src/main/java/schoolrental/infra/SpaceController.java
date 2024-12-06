@@ -19,5 +19,49 @@ public class SpaceController {
 
     @Autowired
     SpaceRepository spaceRepository;
+
+    @RequestMapping(
+        value = "/spaces/{id}/maintainspace",
+        method = RequestMethod.PUT,
+        produces = "application/json;charset=UTF-8"
+    )
+    public Space maintainSpace(
+        @PathVariable(value = "id") Long id,
+        @RequestBody MaintainSpaceCommand maintainSpaceCommand,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws Exception {
+        System.out.println("##### /space/maintainSpace  called #####");
+        Optional<Space> optionalSpace = spaceRepository.findById(id);
+
+        optionalSpace.orElseThrow(() -> new Exception("No Entity Found"));
+        Space space = optionalSpace.get();
+        space.maintainSpace(maintainSpaceCommand);
+
+        spaceRepository.save(space);
+        return space;
+    }
+
+    @RequestMapping(
+        value = "/spaces/{id}/assignmanager",
+        method = RequestMethod.PUT,
+        produces = "application/json;charset=UTF-8"
+    )
+    public Space assignManager(
+        @PathVariable(value = "id") Long id,
+        @RequestBody AssignManagerCommand assignManagerCommand,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws Exception {
+        System.out.println("##### /space/assignManager  called #####");
+        Optional<Space> optionalSpace = spaceRepository.findById(id);
+
+        optionalSpace.orElseThrow(() -> new Exception("No Entity Found"));
+        Space space = optionalSpace.get();
+        space.assignManager(assignManagerCommand);
+
+        spaceRepository.save(space);
+        return space;
+    }
 }
 //>>> Clean Arch / Inbound Adaptor
