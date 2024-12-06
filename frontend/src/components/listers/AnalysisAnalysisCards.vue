@@ -8,7 +8,7 @@
         >
             <v-row>
                 <v-list-item class="d-flex" style="background-color: white;">
-                    <h1 class="align-self-center ml-3">분석</h1>
+                    <h1 class="align-self-center ml-3">Analysis</h1>
                     <div class="secondary-text-color" style="margin-left:30px;"></div>
                 </v-list-item>
             </v-row>
@@ -22,7 +22,7 @@
                         hide-overlay
                         transition="dialog-bottom-transition"
                 >
-                    <Analysis분석 :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" 
+                    <AnalysisAnalysis :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" 
                             @add="append" v-if="tick"/>
 
                     <v-btn
@@ -61,7 +61,7 @@
                                 color="primary"
                                 style="font-weight:500; font-size:20px; padding:15px; border:solid 2px; max-width:250px; overflow:hidden"
                             >
-                                분석 등록
+                                Analysis 등록
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -69,7 +69,7 @@
             </div>
         </v-col>
         <v-row>
-            <Analysis분석 :offline="offline" class="video-card" v-for="(value, index) in values" v-model="values[index]" v-bind:key="index" @delete="remove"/>
+            <AnalysisAnalysis :offline="offline" class="video-card" v-for="(value, index) in values" v-model="values[index]" v-bind:key="index" @delete="remove"/>
         </v-row>
     </div>
 </template>
@@ -77,12 +77,12 @@
 <script>
 
     const axios = require('axios').default;
-    import Analysis분석 from './../Analysis분석.vue';
+    import AnalysisAnalysis from './../AnalysisAnalysis.vue';
 
     export default {
-        name: 'Analysis분석Manager',
+        name: 'AnalysisAnalysisManager',
         components: {
-            Analysis분석,
+            AnalysisAnalysis,
         },
         props: {
             offline: Boolean
@@ -100,8 +100,8 @@
                 return;
             } 
 
-            var temp = await axios.get(axios.fixUrl('/분석'))
-            me.values = temp.data._embedded.분석;
+            var temp = await axios.get(axios.fixUrl('/analyses'))
+            me.values = temp.data._embedded.analyses;
             
             me.newValue = {
                 'placeName': '',

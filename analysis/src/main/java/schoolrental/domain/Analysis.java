@@ -9,10 +9,10 @@ import schoolrental.AnalysisApplication;
 import schoolrental.domain.DataReceived;
 
 @Entity
-@Table(name = "분석_table")
+@Table(name = "Analysis_table")
 @Data
 //<<< DDD / Aggregate Root
-public class 분석 {
+public class Analysis {
 
     @Id
     private String placeName;
@@ -25,11 +25,11 @@ public class 분석 {
         dataReceived.publishAfterCommit();
     }
 
-    public static 분석Repository repository() {
-        분석Repository 분석Repository = AnalysisApplication.applicationContext.getBean(
-            분석Repository.class
+    public static AnalysisRepository repository() {
+        AnalysisRepository analysisRepository = AnalysisApplication.applicationContext.getBean(
+            AnalysisRepository.class
         );
-        return 분석Repository;
+        return analysisRepository;
     }
 
     //<<< Clean Arch / Port Method
@@ -39,21 +39,21 @@ public class 분석 {
         //implement business logic here:
 
         /** Example 1:  new item 
-        분석 분석 = new 분석();
-        repository().save(분석);
+        Analysis analysis = new Analysis();
+        repository().save(analysis);
 
-        DataReceived dataReceived = new DataReceived(분석);
+        DataReceived dataReceived = new DataReceived(analysis);
         dataReceived.publishAfterCommit();
         */
 
         /** Example 2:  finding and process
         
-        repository().findById(facilityReserved.get???()).ifPresent(분석->{
+        repository().findById(facilityReserved.get???()).ifPresent(analysis->{
             
-            분석 // do something
-            repository().save(분석);
+            analysis // do something
+            repository().save(analysis);
 
-            DataReceived dataReceived = new DataReceived(분석);
+            DataReceived dataReceived = new DataReceived(analysis);
             dataReceived.publishAfterCommit();
 
          });

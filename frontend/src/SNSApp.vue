@@ -79,13 +79,13 @@
                     </v-list-item>
                     <v-list-item
                         class="px-2"
-                        key="분석"
-                        to="/analyses/분석"
+                        key="analyses"
+                        to="/analyses/analyses"
                         @click="changeUrl()"
                         color="primary"
                         style="font-weight:700;"
                     >
-                        분석
+                        Analysis
                     </v-list-item>
 
 
@@ -192,10 +192,10 @@ export default {
                 ImageUrl: '',
             },
             { 
-                title: '분석', 
-                description: '분석을 관리하는 화면입니다.', 
-                key: '분석', 
-                route: '/analyses/분석',
+                title: 'Analysis', 
+                description: 'analysis을 관리하는 화면입니다.', 
+                key: 'analyses', 
+                route: '/analyses/analyses',
                 ImageUrl: '',
             },
             { 

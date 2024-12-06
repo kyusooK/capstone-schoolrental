@@ -9,6 +9,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import schoolrental.domain.*;
 
 //<<< PoEAA / Repository
-@RepositoryRestResource(collectionResourceRel = "분석", path = "분석")
-public interface 분석Repository
-    extends PagingAndSortingRepository<분석, String> {}
+@RepositoryRestResource(collectionResourceRel = "analyses", path = "analyses")
+public interface AnalysisRepository
+    extends PagingAndSortingRepository<Analysis, String> {}

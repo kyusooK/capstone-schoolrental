@@ -14,7 +14,7 @@ public class DataReceived extends AbstractEvent {
     private String placeName;
     private Integer useCount;
 
-    public DataReceived(분석 aggregate) {
+    public DataReceived(Analysis aggregate) {
         super(aggregate);
     }
 

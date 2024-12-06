@@ -46,7 +46,7 @@ mvn spring-boot:run
 ```
 - analysis
 ```
- http :8088/분석 placeName="placeName" useCount="useCount" 
+ http :8088/analyses placeName="placeName" useCount="useCount" 
 ```
 
 

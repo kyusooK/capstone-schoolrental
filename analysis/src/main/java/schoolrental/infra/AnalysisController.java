@@ -13,11 +13,11 @@ import schoolrental.domain.*;
 //<<< Clean Arch / Inbound Adaptor
 
 @RestController
-// @RequestMapping(value="/분석")
+// @RequestMapping(value="/analyses")
 @Transactional
-public class 분석Controller {
+public class AnalysisController {
 
     @Autowired
-    분석Repository 분석Repository;
+    AnalysisRepository analysisRepository;
 }
 //>>> Clean Arch / Inbound Adaptor

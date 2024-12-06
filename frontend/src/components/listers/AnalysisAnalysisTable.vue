@@ -31,7 +31,7 @@
                         </v-fab-transition>
                     </template>
 
-                    <Analysis분석 :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
+                    <AnalysisAnalysis :offline="offline" class="video-card" :isNew="true" :editMode="true" v-model="newValue" @add="append" v-if="tick"/>
                 
                     <v-btn
                             style="postition:absolute; top:2%; right:2%"
@@ -50,12 +50,12 @@
 
 <script>
     const axios = require('axios').default;
-    import Analysis분석 from './../Analysis분석.vue';
+    import AnalysisAnalysis from './../AnalysisAnalysis.vue';
 
     export default {
-        name: 'Analysis분석Manager',
+        name: 'AnalysisAnalysisManager',
         components: {
-            Analysis분석,
+            AnalysisAnalysis,
         },
         props: {
             offline: Boolean,
@@ -69,7 +69,7 @@
                     { text: "placeName", value: "placeName" },
                     { text: "useCount", value: "useCount" },
                 ],
-            분석 : [],
+            analysis : [],
             newValue: {},
             tick : true,
             openDialog : false,
@@ -80,9 +80,9 @@
                 return;
             }
 
-            var temp = await axios.get(axios.fixUrl('/분석s'))
-            temp.data._embedded.분석s.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
-            this.values = temp.data._embedded.분석s;
+            var temp = await axios.get(axios.fixUrl('/analyses'))
+            temp.data._embedded.analyses.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
+            this.values = temp.data._embedded.analyses;
 
             this.newValue = {
                 'placeName': '',

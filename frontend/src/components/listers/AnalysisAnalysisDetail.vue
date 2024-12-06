@@ -1,7 +1,7 @@
 <template>
     <v-card outlined>
         <v-card-title>
-            분석 # {{item._links.self.href.split("/")[item._links.self.href.split("/").length - 1]}}
+            Analysis # {{item._links.self.href.split("/")[item._links.self.href.split("/").length - 1]}}
         </v-card-title>
 
         <v-card-text>
@@ -57,7 +57,7 @@
     const axios = require('axios').default;
 
     export default {
-        name: 'Analysis분석Detail',
+        name: 'AnalysisAnalysisDetail',
         components:{},
         props: {
         },
@@ -68,7 +68,7 @@
         async created() {
             var me = this;
             var params = this.$route.params;
-            var temp = await axios.get(axios.fixUrl('/분석/' + params.id))
+            var temp = await axios.get(axios.fixUrl('/analyses/' + params.id))
             if(temp.data) {
                 me.item = temp.data
             }

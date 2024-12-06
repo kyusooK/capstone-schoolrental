@@ -37,7 +37,7 @@
     const axios = require('axios').default;
 
     export default {
-        name: 'Analysis분석Picker',
+        name: 'AnalysisAnalysisPicker',
         props: {
             value: [String, Object, Array, Number, Boolean],
         },
@@ -47,14 +47,14 @@
         }),
         async created() {
             var me = this;
-            var temp = await axios.get(axios.fixUrl('/분석'))
+            var temp = await axios.get(axios.fixUrl('/analyses'))
             if(temp.data) {
-                me.list = temp.data._embedded.분석;
+                me.list = temp.data._embedded.analyses;
             }
 
             if(me.value && typeof me.value == "object" && Object.values(me.value)[0]) {
                 var id = Object.values(me.value)[0];
-                var tmpValue = await axios.get(axios.fixUrl('/분석/' + id))
+                var tmpValue = await axios.get(axios.fixUrl('/analyses/' + id))
                 if(tmpValue.data) {
                     var val = tmpValue.data
                     me.list.forEach(function(item, idx) {

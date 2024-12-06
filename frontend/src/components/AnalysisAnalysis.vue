@@ -9,10 +9,10 @@
         </template>
 
         <v-card-title v-if="value._links">
-            분석 # {{decode(value._links.self.href.split("/")[value._links.self.href.split("/").length - 1])}}
+            Analysis # {{decode(value._links.self.href.split("/")[value._links.self.href.split("/").length - 1])}}
         </v-card-title >
         <v-card-title v-else>
-            분석
+            Analysis
         </v-card-title >        
 
         <v-card-text style="background-color: white;">
@@ -80,7 +80,7 @@
 
 
     export default {
-        name: 'Analysis분석',
+        name: 'AnalysisAnalysis',
         components:{
         },
         props: {
@@ -135,7 +135,7 @@
 
                     if(!this.offline) {
                         if(this.isNew) {
-                            temp = await axios.post(axios.fixUrl('/분석'), this.value)
+                            temp = await axios.post(axios.fixUrl('/analyses'), this.value)
                         } else {
                             temp = await axios.put(axios.fixUrl(this.value._links.self.href), this.value)
                         }

@@ -16,8 +16,8 @@ import 시설물검색ViewDetail from "./components/시설물검색ViewDetail"
 
 import MyPageView from "./components/MyPageView"
 import MyPageViewDetail from "./components/MyPageViewDetail"
-import Analysis분석Manager from "./components/listers/Analysis분석Cards"
-import Analysis분석Detail from "./components/listers/Analysis분석Detail"
+import AnalysisAnalysisManager from "./components/listers/AnalysisAnalysisCards"
+import AnalysisAnalysisDetail from "./components/listers/AnalysisAnalysisDetail"
 
 import FacilityUtilizationRateView from "./components/FacilityUtilizationRateView"
 import FacilityUtilizationRateViewDetail from "./components/FacilityUtilizationRateViewDetail"
@@ -70,14 +70,14 @@ export default new Router({
                 component: MyPageViewDetail
             },
             {
-                path: '/analyses/분석',
-                name: 'Analysis분석Manager',
-                component: Analysis분석Manager
+                path: '/analyses/analyses',
+                name: 'AnalysisAnalysisManager',
+                component: AnalysisAnalysisManager
             },
             {
-                path: '/analyses/분석/:id',
-                name: 'Analysis분석Detail',
-                component: Analysis분석Detail
+                path: '/analyses/analyses/:id',
+                name: 'AnalysisAnalysisDetail',
+                component: AnalysisAnalysisDetail
             },
 
             {

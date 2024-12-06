@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import schoolrental.domain.*;
 
 @Component
-public class 분석HateoasProcessor
-    implements RepresentationModelProcessor<EntityModel<분석>> {
+public class AnalysisHateoasProcessor
+    implements RepresentationModelProcessor<EntityModel<Analysis>> {
 
     @Override
-    public EntityModel<분석> process(EntityModel<분석> model) {
+    public EntityModel<Analysis> process(EntityModel<Analysis> model) {
         return model;
     }
 }

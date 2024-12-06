@@ -18,7 +18,7 @@ import schoolrental.domain.*;
 public class PolicyHandler {
 
     @Autowired
-    분석Repository 분석Repository;
+    AnalysisRepository analysisRepository;
 
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString) {}
@@ -38,7 +38,7 @@ public class PolicyHandler {
         );
 
         // Sample Logic //
-        분석.receiveReservationData(event);
+        Analysis.receiveReservationData(event);
     }
 }
 //>>> Clean Arch / Inbound Adaptor
