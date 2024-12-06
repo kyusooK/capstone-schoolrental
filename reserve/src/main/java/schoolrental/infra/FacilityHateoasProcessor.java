@@ -12,6 +12,12 @@ public class FacilityHateoasProcessor
 
     @Override
     public EntityModel<Facility> process(EntityModel<Facility> model) {
+        model.add(
+            Link
+                .of(model.getRequiredLink("self").getHref() + "/reservation")
+                .withRel("reservation")
+        );
+
         return model;
     }
 }

@@ -43,7 +43,7 @@
                     text
                     @click="save"
                 >
-                    예약
+                저장
                 </v-btn>
                 <v-btn
                     color="primary"
@@ -65,6 +65,20 @@
         </v-card-actions>
         <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn
+                v-if="!editMode"
+                color="primary"
+                text
+                @click="openReservation"
+            >
+                Reservation
+            </v-btn>
+            <v-dialog v-model="reservationDiagram" width="500">
+                <ReservationCommand
+                    @closeDialog="closeReservation"
+                    @reservation="reservation"
+                ></ReservationCommand>
+            </v-dialog>
         </v-card-actions>
 
         <v-snackbar
@@ -102,6 +116,7 @@
                 timeout: 5000,
                 text: '',
             },
+            reservationDiagram: false,
         }),
 	async created() {
         },
@@ -198,6 +213,32 @@
             },
             change(){
                 this.$emit('input', this.value);
+            },
+            async reservation(params) {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['reservation'].href), params)
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                    this.closeReservation();
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            openReservation() {
+                this.reservationDiagram = true;
+            },
+            closeReservation() {
+                this.reservationDiagram = false;
             },
         },
     }

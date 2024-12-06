@@ -6,9 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 import lombok.Data;
 import schoolrental.SpaceApplication;
-import schoolrental.domain.ManagerAssigned;
 import schoolrental.domain.ReserveStatusUpdated;
-import schoolrental.domain.SpaceMaintained;
 import schoolrental.domain.SpaceRegistered;
 
 @Entity
@@ -46,16 +44,10 @@ public class Space {
 
         SpaceRegistered spaceRegistered = new SpaceRegistered(this);
         spaceRegistered.publishAfterCommit();
-
-        ManagerAssigned managerAssigned = new ManagerAssigned(this);
-        managerAssigned.publishAfterCommit();
     }
 
     @PreUpdate
-    public void onPreUpdate() {
-        SpaceMaintained spaceMaintained = new SpaceMaintained(this);
-        spaceMaintained.publishAfterCommit();
-    }
+    public void onPreUpdate() {}
 
     public static SpaceRepository repository() {
         SpaceRepository spaceRepository = SpaceApplication.applicationContext.getBean(
@@ -63,6 +55,25 @@ public class Space {
         );
         return spaceRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void maintainSpace(MaintainSpaceCommand maintainSpaceCommand) {
+        //implement business logic here:
+
+        SpaceMaintained spaceMaintained = new SpaceMaintained(this);
+        spaceMaintained.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
+    //<<< Clean Arch / Port Method
+    public void assignManager(AssignManagerCommand assignManagerCommand) {
+        //implement business logic here:
+
+        ManagerAssigned managerAssigned = new ManagerAssigned(this);
+        managerAssigned.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
 
     //<<< Clean Arch / Port Method
     public static void updateReserveStatus(FacilityReserved facilityReserved) {

@@ -7,7 +7,6 @@ import javax.persistence.*;
 import lombok.Data;
 import schoolrental.ReserveApplication;
 import schoolrental.domain.FacilityRegistered;
-import schoolrental.domain.FacilityReserved;
 
 @Entity
 @Table(name = "Facility_table")
@@ -44,10 +43,7 @@ public class Facility {
     }
 
     @PreUpdate
-    public void onPreUpdate() {
-        FacilityReserved facilityReserved = new FacilityReserved(this);
-        facilityReserved.publishAfterCommit();
-    }
+    public void onPreUpdate() {}
 
     public static FacilityRepository repository() {
         FacilityRepository facilityRepository = ReserveApplication.applicationContext.getBean(
@@ -55,6 +51,16 @@ public class Facility {
         );
         return facilityRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void reservation(ReservationCommand reservationCommand) {
+        //implement business logic here:
+
+        FacilityReserved facilityReserved = new FacilityReserved(this);
+        facilityReserved.publishAfterCommit();
+    }
+
+    //>>> Clean Arch / Port Method
 
     //<<< Clean Arch / Port Method
     public static void registerFacility(SpaceMaintained spaceMaintained) {

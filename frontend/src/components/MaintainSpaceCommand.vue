@@ -5,6 +5,8 @@
         </v-card-title>
 
         <v-card-text>
+            <Boolean label="IsMaintenance" v-model="value.isMaintenance" :editMode="editMode"/>
+            <Number label="Id" v-model="value.id" :editMode="editMode"/>
         </v-card-text>
 
         <v-card-actions>
@@ -40,6 +42,8 @@
             value: {},
         }),
         created() {
+            this.value.isMaintenance = false;
+            this.value.id = 0;
         },
         watch: {
         },

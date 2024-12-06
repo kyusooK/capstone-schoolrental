@@ -19,5 +19,27 @@ public class FacilityController {
 
     @Autowired
     FacilityRepository facilityRepository;
+
+    @RequestMapping(
+        value = "/facilities/{id}/reservation",
+        method = RequestMethod.PUT,
+        produces = "application/json;charset=UTF-8"
+    )
+    public Facility reservation(
+        @PathVariable(value = "id") Long id,
+        @RequestBody ReservationCommand reservationCommand,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws Exception {
+        System.out.println("##### /facility/reservation  called #####");
+        Optional<Facility> optionalFacility = facilityRepository.findById(id);
+
+        optionalFacility.orElseThrow(() -> new Exception("No Entity Found"));
+        Facility facility = optionalFacility.get();
+        facility.reservation(reservationCommand);
+
+        facilityRepository.save(facility);
+        return facility;
+    }
 }
 //>>> Clean Arch / Inbound Adaptor
