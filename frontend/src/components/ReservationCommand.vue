@@ -7,7 +7,6 @@
         <v-card-text>
             <String label="UserId" v-model="value.userId" :editMode="editMode"/>
             <Date label="ReserveDate" v-model="value.reserveDate" :editMode="editMode"/>
-            <Number label="Id" v-model="value.id" :editMode="editMode"/>
         </v-card-text>
 
         <v-card-actions>

@@ -6,7 +6,6 @@
 
         <v-card-text>
             <Boolean label="IsMaintenance" v-model="value.isMaintenance" :editMode="editMode"/>
-            <Number label="Id" v-model="value.id" :editMode="editMode"/>
         </v-card-text>
 
         <v-card-actions>

@@ -6,13 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 
 import lombok.Data;
 import schoolrental.ReserveApplication;
-import schoolrental.domain.FacilityRegistered;
 
 @Entity
 @Table(name = "Facility_table")
@@ -42,12 +39,6 @@ public class Facility {
 
     private Boolean isReserve;
 
-    @PostPersist
-    public void onPostPersist() {
-        FacilityRegistered facilityRegistered = new FacilityRegistered(this);
-        facilityRegistered.publishAfterCommit();
-    }
-
     public static FacilityRepository repository() {
         FacilityRepository facilityRepository = ReserveApplication.applicationContext.getBean(
             FacilityRepository.class
@@ -57,10 +48,16 @@ public class Facility {
 
     //<<< Clean Arch / Port Method
     public void reservation(ReservationCommand reservationCommand) {
-        //implement business logic here:
+        repository().findById(getId()).ifPresent(facility->{
+            
+            setUserId(reservationCommand.getUserId());
+            setReserveDate(reservationCommand.getReserveDate());
+            setIsReserve(true);
+            
+            FacilityReserved facilityReserved = new FacilityReserved(this);
+            facilityReserved.publishAfterCommit();
+        });
 
-        FacilityReserved facilityReserved = new FacilityReserved(this);
-        facilityReserved.publishAfterCommit();
     }
 
     //>>> Clean Arch / Port Method

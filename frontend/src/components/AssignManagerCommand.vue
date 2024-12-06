@@ -6,7 +6,6 @@
 
         <v-card-text>
             <String label="ManagerId" v-model="value.managerId" :editMode="editMode"/>
-            <Number label="Id" v-model="value.id" :editMode="editMode"/>
         </v-card-text>
 
         <v-card-actions>

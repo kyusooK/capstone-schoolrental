@@ -5,14 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PostPersist;
-import javax.persistence.PostUpdate;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import lombok.Data;
 import schoolrental.SpaceApplication;
-import schoolrental.domain.ReserveStatusUpdated;
-import schoolrental.domain.SpaceRegistered;
 
 @Entity
 @Table(name = "Space_table")
@@ -47,15 +43,6 @@ public class Space {
         spaceRegistered.publishAfterCommit();
     }
 
-    @PreUpdate
-    public void onPreUpdate() {}
-
-    @PostUpdate
-    public void onPostUpdate(){
-        ManagerAssigned managerAssigned = new ManagerAssigned(this);
-        managerAssigned.publishAfterCommit();
-    }
-
     public static SpaceRepository repository() {
         SpaceRepository spaceRepository = SpaceApplication.applicationContext.getBean(
             SpaceRepository.class
@@ -67,17 +54,29 @@ public class Space {
     public void maintainSpace(MaintainSpaceCommand maintainSpaceCommand) {
         //implement business logic here:
 
-        SpaceMaintained spaceMaintained = new SpaceMaintained(this);
-        spaceMaintained.publishAfterCommit();
+        repository().findById(getId()).ifPresent(space->{
+            
+            setIsMaintenance(maintainSpaceCommand.getIsMaintenance());
+            repository().save(space);
+
+            SpaceMaintained spaceMaintained = new SpaceMaintained(this);
+            spaceMaintained.publishAfterCommit();
+        });
+
     }
 
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public void assignManager(AssignManagerCommand assignManagerCommand) {
-        //implement business logic here:
+        repository().findById(getId()).ifPresent(space->{
+            
+            setManagerId(assignManagerCommand.getManagerId());
+            repository().save(space);
 
-        ManagerAssigned managerAssigned = new ManagerAssigned(this);
-        managerAssigned.publishAfterCommit();
+            ManagerAssigned managerAssigned = new ManagerAssigned(this);
+            managerAssigned.publishAfterCommit();
+        });
+
     }
 
     //>>> Clean Arch / Port Method

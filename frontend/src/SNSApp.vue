@@ -55,18 +55,6 @@
                         시설
                     </v-list-item>
 
-
-                    <v-list-item
-                        class="px-2"
-                        key="시설물검색"
-                        to="/reserves/시설물검색"
-                        @click="changeUrl()"
-                        color="primary"
-                        style="font-weight:700;"
-                    >
-                        시설물검색
-                    </v-list-item>
-
                     <v-list-item
                         class="px-2"
                         key="myPages"
@@ -77,18 +65,6 @@
                     >
                         MyPage
                     </v-list-item>
-                    <v-list-item
-                        class="px-2"
-                        key="analyses"
-                        to="/analyses/analyses"
-                        @click="changeUrl()"
-                        color="primary"
-                        style="font-weight:700;"
-                    >
-                        Analysis
-                    </v-list-item>
-
-
                     <v-list-item
                         class="px-2"
                         key="facilityUtilizationRates"
@@ -189,20 +165,6 @@ export default {
                 description: 'Facility을 관리하는 화면입니다.', 
                 key: 'facilities', 
                 route: '/reserves/facilities',
-                ImageUrl: '',
-            },
-            { 
-                title: 'Analysis', 
-                description: 'analysis을 관리하는 화면입니다.', 
-                key: 'analyses', 
-                route: '/analyses/analyses',
-                ImageUrl: '',
-            },
-            { 
-                title: '시설물검색', 
-                description: '시설물 검색을 관리하는 화면입니다.', 
-                key: '시설물검색', 
-                route: '/reserves/시설물검색',
                 ImageUrl: '',
             },
             { 
