@@ -35,7 +35,9 @@ mvn spring-boot:run
 ## Test by API
 - space
 ```
- http :8088/spaces id="id" schoolName="schoolName" placeName="placeName" headcount="headcount" price="price" address="address" isMaintenance="isMaintenance" isReserve="isReserve" managerId="managerId" 
+ http :8088/spaces schoolName="A대" placeName="체육관" headcount="50" price="100000" address="서울특별시 서대문구"
+ http :8088/spaces schoolName="B대" placeName="대강의장" headcount="70" price="100000" address="서울특별시 서대문구"
+ http :8088/spaces schoolName="C대" placeName="강의실" headcount="70" price="100000" address="서울특별시 서대문구"
 ```
 - reserve
 ```

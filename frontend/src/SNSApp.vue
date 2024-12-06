@@ -179,7 +179,7 @@ export default {
         aggregate: [
             { 
                 title: '공간', 
-                description: 'Space을 관리하는 화면입니다.', 
+                description: 'Space을 관리하는 화면입니다.', 
                 key: 'spaces', 
                 route: '/spaces/spaces',
                 ImageUrl: '',
@@ -214,7 +214,7 @@ export default {
             },
             { 
                 title: '시설이용률', 
-                description: 'FacilityUtilizationRate을 관리하는 화면입니다.', 
+                description: 'FacilityUtilizationRate을 관리하는 화면입니다.', 
                 key: 'facilityUtilizationRates', 
                 route: '/analyses/facilityUtilizationRates',
                 ImageUrl: '',
